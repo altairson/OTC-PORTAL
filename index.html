@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="./css/main.css">
+    <title>WeeHODL OTC</title>
+</head>
+<body>
+    <script async 
+        src="https://telegram.org/js/telegram-widget.js?7" 
+        data-telegram-login="@weeotc_bot" 
+        data-size="large" 
+        data-auth-url="./callback.html"
+    ></script>
+    <script>
+        $(document).ready(function() {
+        // Retrieve the authorization code from the URL parameters
+        var code = getUrlParameter('code');
+        
+        // Make an AJAX request to exchange the authorization code for an access token
+        $.ajax({
+        url: 'https://api.telegram.org/bot{5076020789:AAGtzSwvbRD-CkGTEAueszo15BzxDdw0JyU}/getChat',
+        method: 'GET',
+        data: {
+            chat_id: code
+        },
+        success: function(response) {
+            // Retrieve the user's information from the response
+            var username = response.result.username;
+            var id = response.result.id;
+            
+            // Do something with the username and ID (e.g., display on the website)
+            alert('Telegram username: ' + username + '\nTelegram ID: ' + id);
+        }
+        });
+    });
+
+    // Helper function to retrieve URL parameters
+    function getUrlParameter(name) {
+        name = name.replace(/[[]/, '\\[').replace(/[]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        var results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
+
+    </script>
+</body>
+</html>

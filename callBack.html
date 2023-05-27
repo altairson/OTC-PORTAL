@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Telegram Callback</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <h1>Telegram Callback</h1>
+  <p>Please wait while we retrieve your Telegram information...</p>
+
+  <script>
+    $(document).ready(function() {
+      // Retrieve the authorization code from the URL parameters
+      var code = getUrlParameter('code');
+
+      // Make an AJAX request to exchange the authorization code for an access token
+      $.ajax({
+        url: 'https://api.telegram.org/bot5076020789:AAGtzSwvbRD-CkGTEAueszo15BzxDdw0JyU/getChat',
+        method: 'GET',
+        data: {
+          chat_id: code
+        },
+        success: function(response) {
+          // Retrieve the user's information from the response
+          var username = response.result.username;
+          var id = response.result.id;
+
+          // Display the username and ID on the page
+          var message = 'Telegram username: ' + username + '<br>Telegram ID: ' + id;
+          $('body').html('<h1>Telegram Callback</h1><p>' + message + '</p>');
+        }
+      });
+    });
+
+    // Helper function to retrieve URL parameters
+    function getUrlParameter(name) {
+      name = name.replace(/[[]/, '\\[').replace(/[]]/, '\\]');
+      var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+      var results = regex.exec(location.search);
+      return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
+  </script>
+</body>
+</html>
